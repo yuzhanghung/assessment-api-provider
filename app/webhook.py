@@ -51,6 +51,9 @@ async def send_webhook(client_id: str, assessment_id: str, status: str):
 
 
 async def process_assessment(assessment_id: str):
+
+    print("PROCESS STARTED:", assessment_id)
+
     db = SessionLocal()
 
     try:
@@ -62,45 +65,19 @@ async def process_assessment(assessment_id: str):
             print("Assessment not found:", assessment_id)
             return
 
-        client_id = assessment.client_id
+        print("Found assessment:", assessment_id)
 
-
-        # submitted -> pending
         await asyncio.sleep(3)
+
+        print("Sending pending webhook")
 
         assessment.status = "pending"
         db.commit()
 
         await send_webhook(
-            client_id,
+            assessment.client_id,
             assessment_id,
             "pending"
-        )
-
-
-        # pending -> running
-        await asyncio.sleep(5)
-
-        assessment.status = "running"
-        db.commit()
-
-        await send_webhook(
-            client_id,
-            assessment_id,
-            "running"
-        )
-
-
-        # running -> completed
-        await asyncio.sleep(10)
-
-        assessment.status = "completed"
-        db.commit()
-
-        await send_webhook(
-            client_id,
-            assessment_id,
-            "completed"
         )
 
     finally:

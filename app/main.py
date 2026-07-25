@@ -2,7 +2,7 @@ import asyncio
 import secrets
 import uuid
 
-from fastapi import FastAPI
+from fastapi import FastAPI, BackgroundTasks
 from pydantic import BaseModel
 
 from app.database import SessionLocal
@@ -48,7 +48,11 @@ def register_webhook(request: WebhookRequest):
 
 
 @app.post("/api/assessments", status_code=201)
-async def create_assessment(request: AssessmentRequest):
+async def create_assessment(
+    request: AssessmentRequest,
+    background_tasks: BackgroundTasks
+
+):
     db = SessionLocal()
 
     assessment_id = str(uuid.uuid4())
@@ -66,8 +70,9 @@ async def create_assessment(request: AssessmentRequest):
     db.close()
 
 
-    asyncio.create_task(
-        process_assessment(assessment_id)
+    background_tasks.add_task(
+        process_assessment,
+        assessment_id
     )
 
     return {
