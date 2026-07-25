@@ -42,7 +42,6 @@ def register_webhook(request: WebhookRequest):
     return {
         "endpoint_id": endpoint_id,
         "secret": secret,
-        "client_id": request.client_id,
         "status": "registered",
         "message": "Webhook registered successfully"
     }
@@ -74,8 +73,6 @@ def create_assessment(request: AssessmentRequest):
     return {
         "status": "submitted",
         "assessment_id": assessment_id,
-        "client_id": request.client_id,
-        "product": request.product_id,
         "message": "Assessment submitted successfully"
     }
 
