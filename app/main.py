@@ -2,11 +2,11 @@ import asyncio
 import secrets
 import uuid
 
-from database import SessionLocal
 from fastapi import FastAPI
-from models import Assessment, WebhookEndpoint
 from pydantic import BaseModel
 
+from app.database import SessionLocal
+from app.models import Assessment, WebhookEndpoint
 from app.webhook import process_assessment
 
 app = FastAPI()

@@ -1,9 +1,9 @@
 import asyncio
 
 import httpx
-from database import SessionLocal
-from models import Assessment, WebhookEndpoint
 
+from app.database import SessionLocal
+from app.models import Assessment, WebhookEndpoint
 from app.security import create_signature
 
 
