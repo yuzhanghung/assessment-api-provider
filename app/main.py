@@ -48,7 +48,7 @@ def register_webhook(request: WebhookRequest):
 
 
 @app.post("/api/assessments", status_code=201)
-def create_assessment(request: AssessmentRequest):
+async def create_assessment(request: AssessmentRequest):
     db = SessionLocal()
 
     assessment_id = str(uuid.uuid4())
