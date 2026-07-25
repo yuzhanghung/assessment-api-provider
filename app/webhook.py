@@ -21,7 +21,8 @@ async def send_webhook(client_id: str, assessment_id: str, status: str):
 
         payload = {
             "assessment_id": assessment_id,
-            "status": status
+            "status": status,
+            "client_id": client_id
         }
 
         signature = create_signature(
