@@ -1,4 +1,7 @@
+import uuid
+
 from sqlalchemy import Column, DateTime, String, Text
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
 from app.database import Base
@@ -24,6 +27,51 @@ class Assessment(Base):
     product_id = Column(String, nullable=False)
     assessment_type = Column(String, nullable=False)
     status = Column(String, nullable=False)
+    created_at = Column(
+        DateTime(timezone=True),
+        server_default=func.now()
+    )
+
+    artifacts = relationship(
+        "Artifact",
+        back_populates="assessment"
+    )
+
+class Artifact(Base):
+    __tablename__ = "artifacts"
+
+    id = Column(
+        String,
+        primary_key=True,
+        default=lambda: str(uuid.uuid4())
+    )
+
+    assessment_id = Column(
+        String,
+        nullable=False
+    )
+
+    assessment = relationship(
+        "Assessment",
+        back_populates="artifacts"
+    )
+
+    filename = Column(
+        String,
+        nullable=False
+    )
+
+    object_key = Column(
+        Text,
+        nullable=False
+    )
+
+    status = Column(
+        String,
+        nullable=False,
+        default="pending_upload"
+    )
+
     created_at = Column(
         DateTime(timezone=True),
         server_default=func.now()
