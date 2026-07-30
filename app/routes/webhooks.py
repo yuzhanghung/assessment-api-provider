@@ -9,7 +9,7 @@ from app.models import WebhookEndpoint
 
 
 router = APIRouter(
-    prefix="/webhooks",
+    prefix="/api/webhooks",
     tags=["webhooks"]
 )
 

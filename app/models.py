@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, DateTime, String, Text
+from sqlalchemy import Column, DateTime, String, Text, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
@@ -48,6 +48,7 @@ class Artifact(Base):
 
     assessment_id = Column(
         String,
+        ForeignKey("assessments.assessment_id"),
         nullable=False
     )
 

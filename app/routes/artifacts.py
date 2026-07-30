@@ -11,7 +11,7 @@ from app.storage import s3_client
 get_db_dep = Depends(get_db)
 
 router = APIRouter(
-    prefix="/v1/artifacts",
+    prefix="/api/artifacts",
     tags=["artifacts"]
 )
 
